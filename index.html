@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinebites – Tus pelis + comida sabrosa</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1533;
+      --bg-2:#111c43;
+      --accent:#e63946;
+      --soft:#ffe27a;
+      --text:#f8f9fa;
+      --muted:#adb5bd;
+      --footer:#e11d2f; /* rojo footer */
+    }
+
+    body{
+      font-family:"Poppins",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .navbar{background:transparent;}
+    .navbar .nav-link{color:#d6d9e0;}
+    .navbar .nav-link:hover{color:#fff;}
+    .brand{color:#ff6b6b!important;font-weight:800;}
+
+    .btn-accent{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      box-shadow:0 8px 20px rgba(230,57,70,.35);
+    }
+    .btn-accent:hover{filter:brightness(.95);}
+
+    .hero-title{
+      font-size:clamp(2rem,4vw,3.2rem);
+      font-weight:800;
+      line-height:1.05;
+      color:#ffeccc;
+    }
+    .hero-lead{color:#d9dbe6;}
+
+    .glass{
+      background:rgba(255,226,122,.2);
+      border-radius:18px;
+      backdrop-filter:blur(6px);
+    }
+
+    .metric{color:#2c2c2c;font-weight:800;font-size:1.4rem;}
+    .metric-label{color:#4b4b4b;font-weight:600;}
+    .muted{color:var(--muted);}
+    .list-check .bi{margin-right:.5rem;}
+    .section-title{font-weight:800;}
+
+    /* Sección "Elige tu película" (ya añadida antes) */
+    .peliculas{
+      background:linear-gradient(180deg,#101a42 0%,#18224f 100%);
+      padding:80px 0;
+    }
+    .peliculas .card{
+      background:#ffe27a;border:none;border-radius:16px;color:#2c2c2c;
+      box-shadow:0 10px 25px rgba(0,0,0,.25);
+    }
+    .peliculas .card img{border-radius:12px;margin-bottom:15px;width:100%;height:auto;}
+    .peliculas h3{font-weight:700;font-size:1.4rem;}
+    .peliculas b{color:#000;}
+
+    /* ====== NUEVO: Testimonios ====== */
+    .testi{
+      padding:80px 0;
+      background:linear-gradient(180deg,#0f1a3f 0%, #142050 100%);
+    }
+    .review-card{
+      background:rgba(255,255,255,.08);
+      border:1.5px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      color:#e6e8ef;
+      backdrop-filter: blur(6px);
+    }
+    .avatar{
+      width:40px;height:40px;border-radius:999px;object-fit:cover;
+      border:2px solid rgba(255,255,255,.35);
+    }
+    .rating .bi-star-fill{color:#ffc107;}
+    /* Botones circulares a la derecha */
+    .carousel-circle{
+      width:48px;height:48px;border-radius:999px;display:inline-flex;
+      align-items:center;justify-content:center;border:0;background:var(--accent);
+      color:#fff;
+    }
+    .carousel-indicators [data-bs-target]{
+      width:10px;height:10px;border-radius:999px;background:#ffcdc9;opacity:.6;
+    }
+    .carousel-indicators .active{background:#ffffff;opacity:1;}
+
+    /* ====== NUEVO: Marcas ====== */
+    .brands{padding:40px 0;}
+    .brands img{max-height:60px;opacity:.9;filter:brightness(1.1) contrast(1.1);}
+
+    /* ====== NUEVO: Footer rojo con mapa ====== */
+    .footer-red{
+      background:var(--footer);
+      color:#fff;
+      padding:60px 0 20px;
+    }
+    .footer-red a{color:#fff;text-decoration:none;}
+    .footer-red a:hover{text-decoration:underline;}
+    .social a{
+      width:36px;height:36px;border-radius:999px;display:inline-flex;
+      align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.7);
+      margin-right:8px;
+    }
+    .hours li{margin-bottom:.25rem;}
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg py-3">
+    <div class="container">
+      <a class="navbar-brand brand fs-3" href="#">Cinebites</a>
+      <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto gap-lg-3">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#peliculas">Movies</a></li>
+          <li class="nav-item"><a class="nav-link" href="#resenas">Reseñas</a></li>
+          <li class="nav-item"><a class="btn btn-accent ms-lg-3" href="#cartelera">Ver la Cartelera</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h1 class="hero-title mb-3">Tus pelis favoritas +<br>comida sabrosa.</h1>
+          <p class="hero-lead mb-4">Cinebites: tú eliges tu peli y nosotros te servimos el menú.</p>
+          <a href="#reservas" class="btn btn-accent btn-lg px-4">Ver la Cartelera</a>
+        </div>
+        <div class="col-lg-6 text-center">
+          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=1200&auto=format&fit=crop" class="img-fluid rounded" alt="Persona comiendo palomitas">
+        </div>
+      </div>
+    </div>
+  </header>
+
+ <!-- MÉTRICAS -->
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="p-4 p-lg-5 text-center metrics-box">
+      <div class="row align-items-center g-4 justify-content-center">
+        <div class="col-md-4 d-flex flex-column flex-md-row align-items-center justify-content-center">
+          <div class="icon-circle me-md-3 mb-2 mb-md-0">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <div>
+            <h4 class="fw-bold mb-0">90+</h4>
+            <small>Comensales</small>
+          </div>
+        </div>
+
+        <div class="col-md-4 border-md-start border-md-end d-flex flex-column flex-md-row align-items-center justify-content-center">
+          <div class="icon-circle me-md-3 mb-2 mb-md-0">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <div>
+            <h4 class="fw-bold mb-0">2</h4>
+            <small>Cines</small>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex flex-column flex-md-row align-items-center justify-content-center">
+          <div class="icon-circle me-md-3 mb-2 mb-md-0">
+            <i class="bi bi-egg-fried"></i>
+          </div>
+          <div>
+            <h4 class="fw-bold mb-0">50+</h4>
+            <small>Platos</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.metrics-box {
+  background: linear-gradient(90deg, #ffeb9b 0%, #ffe27a 100%);
+  border-radius: 12px;
+  color: #2c2c2c;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.icon-circle {
+  background: #ffcc47;
+  color: #e63946;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.border-md-start {
+  border-left: 1.5px solid rgba(0,0,0,0.15);
+}
+.border-md-end {
+  border-right: 1.5px solid rgba(0,0,0,0.15);
+}
+@media (max-width: 767px) {
+  .border-md-start, .border-md-end { border: none !important; }
+}
+</style>
+
+
+  <!-- OFRECEMOS -->
+  <section id="menu" class="py-5">
+    <div class="container">
+      <div class="row g-5 align-items-start">
+        <div class="col-lg-6">
+          <h2 class="section-title mb-3">Te Ofrecemos</h2>
+          <p class="muted">Contamos con una gran variedad de platillos, desde desayunos hasta postres. Solo elige tu peli.</p>
+          <ul class="list-unstyled list-check mt-4">
+            <li><i class="bi bi-check-circle text-warning"></i>Entrada cinematográfica</li>
+            <li><i class="bi bi-check-circle text-warning"></i>Plato principal estelar</li>
+            <li><i class="bi bi-check-circle text-warning"></i>Bebida de película</li>
+            <li><i class="bi bi-check-circle text-warning"></i>Postre final</li>
+            <li><i class="bi bi-check-circle text-warning"></i>Experiencia completa</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <div class="row g-4">
+            <div class="col-6"><img class="img-fluid rounded" src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop" alt="Hamburguesa"></div>
+            <div class="col-6"><img class="img-fluid rounded" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Ensalada"></div>
+            <div class="col-6"><img class="img-fluid rounded" src="https://images.unsplash.com/photo-1496412705862-e0088f16f791?q=80&w=800&auto=format&fit=crop" alt="Desayuno"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ELIGE TU PELÍCULA -->
+  <section id="peliculas" class="text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-2">Elige tu película</h2>
+      <p class="text-light mb-5">Ve los menús y dinos qué se te antoja más 🍿</p>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card p-4 h-100">
+            <img src="img/IMG-20251102-WA0020.jpg" alt="Shrek 2">
+            <h3>Shrek 2</h3>
+            <p><b>Entrada:</b> Aros del Pantano – Aros de cebolla con salsa verde.</p>
+            <p><b>Plato principal:</b> Banquete Real – Pollo asado con puré.</p>
+            <p><b>Bebida:</b> Poción Feliz para Siempre – Limonada de frambuesa.</p>
+            <p><b>Postre:</b> Torre de Dulce Final – Mini torre de waffle.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 h-100">
+            <img src="img/IMG-20251102-WA0021.jpg" alt="La Princesa y el Sapo">
+            <h3>La Princesa y el Sapo</h3>
+            <p><b>Entrada:</b> Bocaditos del Bayou – Empanaditas de camarón cajún.</p>
+            <p><b>Plato principal:</b> Gumbo de Tiana – Guiso criollo con arroz.</p>
+            <p><b>Bebida:</b> Poción del Más Allá – Uva, lima y toque ahumado.</p>
+            <p><b>Postre:</b> Beignets Mágicos – Azúcar glass y canela.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 h-100">
+            <img src="img/IMG-20251102-WA0022.jpg" alt="Ratatouille">
+            <h3>Ratatouille</h3>
+            <p><b>Entrada:</b> Panecillos de Colette – Con crema de hierbas.</p>
+            <p><b>Plato principal:</b> Ratatouille – Verduras al horno con tomate.</p>
+            <p><b>Bebida:</b> Refresco de Gusteau – Limonada con lavanda.</p>
+            <p><b>Postre:</b> Sueño de París – Tarta de frutas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ===================== CARTELERA DE PELÍCULAS ===================== -->
+  <section id="cartelera" class="py-5" style="background:linear-gradient(180deg,#0f1a3f 0%,#18224f 100%)">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-3">🎥 Horarios de Películas</h2>
+      <p class="text-light mb-5">Consulta los horarios disponibles para cada función y reserva tu experiencia completa de cine + comida.</p>
+      <div class="row g-4 justify-content-center">
+
+        <!-- Shrek 2 -->
+        <div class="col-md-4">
+          <div class="p-4 rounded-4 bg-light text-dark h-100 shadow-sm">
+            <h4 class="fw-bold mb-3"><i class="bi bi-film text-danger me-1"></i>Shrek 2</h4>
+            <ul class="list-unstyled mb-3">
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>10:30 a. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>1:00 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>4:15 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>7:30 p. m.</li>
+            </ul>
+            <p class="small text-muted mb-0">Sala 1 – Cinebites Morazán</p>
+          </div>
+        </div>
+
+        <!-- La Princesa y el Sapo -->
+        <div class="col-md-4">
+          <div class="p-4 rounded-4 bg-light text-dark h-100 shadow-sm">
+            <h4 class="fw-bold mb-3"><i class="bi bi-film text-danger me-1"></i>La Princesa y el Sapo</h4>
+            <ul class="list-unstyled mb-3">
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>11:15 a. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>2:00 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>5:15 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>8:45 p. m.</li>
+            </ul>
+            <p class="small text-muted mb-0">Sala 2 – Cinebites Morazán</p>
+          </div>
+        </div>
+
+        <!-- Ratatouille -->
+        <div class="col-md-4">
+          <div class="p-4 rounded-4 bg-light text-dark h-100 shadow-sm">
+            <h4 class="fw-bold mb-3"><i class="bi bi-film text-danger me-1"></i>Ratatouille</h4>
+            <ul class="list-unstyled mb-3">
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>12:00 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>3:30 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>6:00 p. m.</li>
+              <li><i class="bi bi-clock-fill text-warning me-2"></i>9:00 p. m.</li>
+            </ul>
+            <p class="small text-muted mb-0">Sala 3 – Cinebites Morazán</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIOS ===================== -->
+  <section id="testimonios" class="testi">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-2">Preferido por quienes viven el cine<br>con todos los sentidos</h2>
+      <p class="text-center text-light mb-4">Conoce las experiencias de quienes ya disfrutaron esta forma única de saborear sus películas favoritas.</p>
+
+      <div id="carouselTesti" class="carousel slide position-relative">
+        <!-- Dots -->
+        <div class="carousel-indicators" style="left:1rem; right:auto; bottom:-2.2rem;">
+          <button type="button" data-bs-target="#carouselTesti" data-bs-slide-to="0" class="active" aria-current="true" aria-label="1"></button>
+          <button type="button" data-bs-target="#carouselTesti" data-bs-slide-to="1" aria-label="2"></button>
+          <button type="button" data-bs-target="#carouselTesti" data-bs-slide-to="2" aria-label="3"></button>
+        </div>
+
+        <div class="carousel-inner py-2">
+          <!-- item 1 -->
+          <div class="carousel-item active">
+            <div class="row g-4 justify-content-center">
+              <div class="col-lg-8">
+                <div class="review-card p-4">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                      <img class="avatar" src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?q=80&w=200&auto=format&fit=crop" alt="">
+                      <div>
+                        <strong>Yessica Christy</strong>
+                        <div class="small text-light">Amante del cine</div>
+                      </div>
+                    </div>
+                    <div class="rating d-flex align-items-center gap-2">
+                      <span>4.5</span> <i class="bi bi-star-fill"></i>
+                    </div>
+                  </div>
+                  <p class="mb-0">“Me encantó cómo cada plato tenía relación con la película. Los sabores y el ambiente… ¡te hace sentir parte del filme!”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 2 -->
+          <div class="carousel-item">
+            <div class="row g-4 justify-content-center">
+              <div class="col-lg-8">
+                <div class="review-card p-4">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                      <img class="avatar" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=200&auto=format&fit=crop" alt="">
+                      <div>
+                        <strong>Andrés M.</strong>
+                        <div class="small text-light">Estudiante de animación</div>
+                      </div>
+                    </div>
+                    <div class="rating d-flex align-items-center gap-2">
+                      <span>4.8</span> <i class="bi bi-star-fill"></i>
+                    </div>
+                  </div>
+                  <p class="mb-0">“Probar los platillos inspirados en mis pelis favoritas fue increíble. Estabas dentro de la historia.”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 3 -->
+          <div class="carousel-item">
+            <div class="row g-4 justify-content-center">
+              <div class="col-lg-8">
+                <div class="review-card p-4">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                      <img class="avatar" src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=200&auto=format&fit=crop" alt="">
+                      <div>
+                        <strong>Judie K.</strong>
+                        <div class="small text-light">Fan del cine y repostería</div>
+                      </div>
+                    </div>
+                    <div class="rating d-flex align-items-center gap-2">
+                      <span>4.6</span> <i class="bi bi-star-fill"></i>
+                    </div>
+                  </div>
+                  <p class="mb-0">“Combina lo mejor del cine y la comida… ¡una experiencia distinta y deliciosa!”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles a la derecha -->
+        <div class="position-absolute top-50 end-0 translate-middle-y d-flex flex-column gap-3 me-1 me-md-4">
+          <button class="carousel-circle" data-bs-target="#carouselTesti" data-bs-slide="prev" aria-label="Anterior">
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <button class="carousel-circle" data-bs-target="#carouselTesti" data-bs-slide="next" aria-label="Siguiente">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MARCAS ===================== -->
+  <section class="brands">
+    <div class="container">
+      <div class="row text-center align-items-center justify-content-center g-4">
+        <div class="col-6 col-md-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="img-fluid" alt="Netflix">
+        </div>
+        <div class="col-6 col-md-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" class="img-fluid" alt="Disney+">
+        </div>
+        <div class="col-6 col-md-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="img-fluid" alt="Amazon">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ROJO ===================== -->
+  <footer class="footer-red">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <h5 class="fw-bold mb-3">Cinebites</h5>
+          <ul class="list-unstyled mb-4">
+            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>Boulevard Morazán, Tegucigalpa, Honduras</li>
+            <li class="mb-2"><i class="bi bi-telephone me-2"></i><a href="tel:+50499999999">+504 9999-9999</a></li>
+            <li class="mb-2"><i class="bi bi-envelope me-2"></i><a href="mailto:info@cinebites.com">info@cinebites.com</a></li>
+          </ul>
+
+          <div class="mb-3 fw-semibold">Horarios</div>
+          <ul class="list-unstyled hours">
+            <li><i class="bi bi-dot"></i> Lunes a sábado: 10:00 a. m. – 9:00 p. m.</li>
+            <li><i class="bi bi-dot"></i> Domingos: 11:00 a. m. – 6:00 p. m.</li>
+          </ul>
+
+          <div class="social mt-3">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="ratio ratio-16x9 rounded overflow-hidden shadow">
+            <iframe
+              src="https://maps.google.com/maps?q=Boulevard%20Moraz%C3%A1n%2C%20Tegucigalpa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              loading="lazy" style="border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border border-light opacity-25 my-4">
+      <div class="text-center small">© <span id="year"></span> Cinebites. Todos los derechos reservados.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+</body>
+</html>
